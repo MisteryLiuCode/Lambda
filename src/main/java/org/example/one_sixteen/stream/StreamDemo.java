@@ -3,6 +3,7 @@ package org.example.one_sixteen.stream;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
+import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -37,7 +38,12 @@ public class StreamDemo {
         //        test11();
         //        test12();
         //        test13();
-        test14();
+        //        test14();
+        //        test15();
+        //        test16();
+        //        test17();
+        //        test18();
+        test19();
     }
 
     /**
@@ -379,5 +385,116 @@ public class StreamDemo {
 
     }
 
+    /**
+     * 使用stream求所有作者年龄的和
+     *
+     * @param
+     * @return void
+     * @since 2023/9/10 16:16 by misteryliu
+     **/
+    public static void test15() {
+        List<Author> authors = getAuthors();
+        System.out.println(
+                authors.stream().map(author -> author.getAge()).reduce(0, (result, element) -> result + element));
+
+    }
+
+    /**
+     * 求所有作者中年龄最大的值
+     *
+     * @param
+     * @return void
+     * @since 2023/9/10 16:25 by misteryliu
+     **/
+    public static void test16() {
+        //        使用 reduce 求所有作者中年龄最大的值
+        List<Author> authors = getAuthors();
+        System.out.println(authors.stream().map(author -> author.getAge()).reduce(0, new BinaryOperator<Integer>() {
+            @Override
+            public Integer apply(Integer result, Integer element) {
+                return Math.max(result, element);
+            }
+        }));
+    }
+
+    /**
+     * 求所有作者中年龄最小的值
+     *
+     * @param
+     * @return void
+     * @since 2023/9/10 16:25 by misteryliu
+     **/
+    public static void test17() {
+        //        使用 reduce 求所有作者中年龄最大的值
+        List<Author> authors = getAuthors();
+        System.out.println(authors.stream().map(author -> author.getAge())
+                .reduce(Integer.MAX_VALUE, new BinaryOperator<Integer>() {
+                    @Override
+                    public Integer apply(Integer result, Integer element) {
+                        return Math.min(result, element);
+                    }
+                }));
+    }
+
+    /**
+     * 求所有作者中年龄最小的值(reduce一个入参)
+     *
+     * @param
+     * @return void
+     * @since 2023/9/10 16:25 by misteryliu
+     **/
+    public static void test18() {
+        //        使用 reduce 求所有作者中年龄最大的值
+        List<Author> authors = getAuthors();
+        System.out.println(authors.stream().map(author -> author.getAge()).reduce(new BinaryOperator<Integer>() {
+            @Override
+            public Integer apply(Integer result, Integer element) {
+                return Math.min(result, element);
+            }
+        }).get());
+    }
+
+    /**
+     * 演示流不能被重复使用
+     *
+     * @param
+     * @return void
+     * @since 2023/9/10 16:54 by misteryliu
+     **/
+    public static void test19() {
+        List<Author> authors = getAuthors();
+        // 创建流
+        Stream<Author> stream = authors.stream();
+        // 初次使用流
+        stream.map(author -> author.getName()).forEach(name -> System.out.println(name));
+        //再次使用流 stream has already been operated upon or closed
+        stream.map(author -> author.getName()).forEach(name -> System.out.println(name));
+    }
+
+    /**
+     * stream 对原数据的影响
+     *
+     * @param
+     * @return void
+     * @since 2023/9/10 17:03 by misteryliu
+     **/
+    public static void test20() {
+        List<Author> authors = getAuthors();
+        // 创建流
+        Stream<Author> stream = authors.stream();
+
+        //这样不会影响
+        stream.map(author -> author.getAge() + 10).forEach(age -> System.out.println(age));
+
+        authors.stream().map(new Function<Author, Author>() {
+            @Override
+            public Author apply(Author author) {
+                //直接调用 set 方法是会影响的
+                author.setAge(author.getAge()+10);
+                return author;
+            }
+        }).forEach(age-> System.out.println(age));
+
+    }
 }
 
