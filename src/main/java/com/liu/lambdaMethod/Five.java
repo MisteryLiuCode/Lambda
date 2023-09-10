@@ -1,4 +1,4 @@
-package org.example.one_sixteen;
+package com.liu.lambdaMethod;
 
 /**
  * All rights Reserved, Designed By jiexingcloud. lambda 表达式一些用法

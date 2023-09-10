@@ -1,4 +1,4 @@
-package org.example.one_sixteen.stream;
+package com.liu.entity;
 
 /**
  * All rights Reserved, Designed By misteryliu.
@@ -9,8 +9,6 @@ package org.example.one_sixteen.stream;
  */
 import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @ToString

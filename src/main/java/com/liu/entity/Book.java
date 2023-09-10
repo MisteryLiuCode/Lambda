@@ -1,4 +1,4 @@
-package org.example.one_sixteen.stream;
+package com.liu.entity;
 
 /**
  * All rights Reserved, Designed By misteryliu.

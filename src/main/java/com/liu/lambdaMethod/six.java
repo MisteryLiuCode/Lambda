@@ -1,4 +1,4 @@
-package org.example.one_sixteen;
+package com.liu.lambdaMethod;
 
 import java.util.function.IntBinaryOperator;
 
