@@ -2,6 +2,7 @@ package com.liu.stream;
 
 import com.liu.entity.Author;
 import com.liu.entity.Book;
+import com.liu.entity.InitData;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -93,7 +94,7 @@ public class StreamDemo {
      * @since 2023/9/3 15:53 by misteryliu
      **/
     public static void test03() {
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         //我的写法
         List<String> authorNames = authors.stream() //集合转换成流
                 //filter 入参是Predicate,里面就是 lambda表达式实现方法
@@ -131,52 +132,13 @@ public class StreamDemo {
      * @since 2023/9/3 16:02 by misteryliu
      **/
     private static void test04() {
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         //使用 filter 方法过滤:打印出所有姓名长度大于 3 的作家的姓名
         authors.stream().filter(author -> author.getName().length() > 3)
                 .forEach(author -> System.out.println(author.getName()));
     }
 
-    /**
-     * 初始化一些数据
-     *
-     * @param
-     * @return java.util.List<org.example.one_sixteen.stream.Author>
-     * @since 2023/9/3 15:53 by misteryliu
-     **/
-    private static List<Author> getAuthors() {
-        Author author1 = new Author(1L, "杨杰炜", "my introduction 1", 18, null);
-        Author author2 = new Author(2L, "yjwsds", "my introduction 2", 19, null);
-        Author author3 = new Author(3L, "yjwsd", "my introduction 3", 14, null);
-        Author author4 = new Author(4L, "wdts", "my introduction 4", 29, null);
-        Author author5 = new Author(5L, "wtf", "my introduction 5", 12, null);
-        Author author6 = new Author(5L, "wtf", "my introduction 5", 12, null);
 
-        List<Book> books1 = new ArrayList<>();
-        List<Book> books2 = new ArrayList<>();
-        List<Book> books3 = new ArrayList<>();
-
-        // 上面是作者和书
-        books1.add(new Book(1L, "类别,分类啊", "书名1", 45D, "这是简介哦"));
-        books1.add(new Book(1L, "类别,分类啊", "书名1", 45D, "这是简介哦"));
-        books1.add(new Book(3L, "喜剧", "书名3", 83D, "这是简介哦"));
-
-        books2.add(new Book(5L, "天啊", "书名4", 65D, "这是简介哦"));
-        books2.add(new Book(6L, "高效", "书名5", 89D, "这是简介哦"));
-
-        books3.add(new Book(7L, "久啊", "书名6", 45D, "这是简介哦"));
-        books3.add(new Book(8L, "高效", "书名7", 44D, "这是简介哦"));
-        books3.add(new Book(9L, "喜剧", "书名8", 81D, "这是简介哦"));
-
-        author1.setBookList(books1);
-        author2.setBookList(books2);
-        author3.setBookList(books3);
-        author4.setBookList(books3);
-        author5.setBookList(books2);
-        author6.setBookList(books2);
-
-        return new ArrayList<>(Arrays.asList(author1, author2, author3, author4, author5, author6));
-    }
 
     /**
      * stream流之 map 操作 打印和操作
@@ -186,7 +148,7 @@ public class StreamDemo {
      * @since 2023/9/3 16:04 by misteryliu
      **/
     private static void test05() {
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         // 第一种方案
         authors.stream().forEach(author -> System.out.println(author.getName()));
 
@@ -205,7 +167,7 @@ public class StreamDemo {
      * @since 2023/9/3 16:53 by misteryliu
      **/
     public static void test06() {
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         authors.stream().distinct().forEach(author -> System.out.println(author.getName()));
     }
 
@@ -217,7 +179,7 @@ public class StreamDemo {
      * @since 2023/9/3 16:55 by misteryliu
      **/
     private static void test07() {
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         authors.stream().sorted().forEach(author -> System.out.println(author.getAge()));
     }
 
@@ -230,7 +192,7 @@ public class StreamDemo {
      **/
     private static void test08() {
 
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         authors.stream().sorted().limit(2).forEach(author -> System.out.println(author.getName()));
 
     }
@@ -243,7 +205,7 @@ public class StreamDemo {
      * @since 2023/9/3 19:23 by misteryliu
      **/
     private static void test09() {
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         authors.stream().distinct().sorted().skip(1).forEach(author -> System.out.println(author.getName()));
     }
 
@@ -255,7 +217,7 @@ public class StreamDemo {
      * @since 2023/9/3 19:36 by misteryliu
      **/
     private static void test10() {
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         //用 Map 的方案 TODO 还未完成
         ArrayList<Book> resBookList = new ArrayList<>();
         ArrayList<String> resBookNameList = new ArrayList<>();
@@ -298,7 +260,7 @@ public class StreamDemo {
      * @since 2023/9/3 20:37 by misteryliu
      **/
     private static void test11() {
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         Optional<Double> max = authors.stream().flatMap(author -> author.getBookList().stream())
                 .map(book -> book.getScore()).max(new Comparator<Double>() {
                     @Override
@@ -330,7 +292,7 @@ public class StreamDemo {
     private static void test12() {
 
         //list 集合
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         List<String> collectList = authors.stream().map(author -> author.getName()).collect(Collectors.toList());
 
         //         set 集合
@@ -355,10 +317,10 @@ public class StreamDemo {
      **/
     private static void test13() {
         //判断是否有任意一个大于 25 岁的作家
-        boolean any = getAuthors().stream().anyMatch(author -> author.getAge() > 25);
+        boolean any = InitData.getAuthors().stream().anyMatch(author -> author.getAge() > 25);
         System.out.println("是否有任意一个大于 25 岁的作家:" + any);
         //       判断所有作家年龄都大于 18 岁
-        boolean all = getAuthors().stream().allMatch(author -> author.getAge() > 18);
+        boolean all = InitData.getAuthors().stream().allMatch(author -> author.getAge() > 18);
         System.out.println("是否全部都大于 18" + all);
     }
 
@@ -371,7 +333,7 @@ public class StreamDemo {
      **/
     private static void test14() {
         //       获取任意一个年龄大于 18 的元素
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         Optional<Author> any = authors.stream().filter(author -> author.getAge() > 18).findAny();
         //ifPresent避免空指针,如果找不到不会执行
         any.ifPresent(author -> System.out.println(author.getAge()));
@@ -395,7 +357,7 @@ public class StreamDemo {
      * @since 2023/9/10 16:16 by misteryliu
      **/
     public static void test15() {
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         System.out.println(
                 authors.stream().map(author -> author.getAge()).reduce(0, (result, element) -> result + element));
 
@@ -410,7 +372,7 @@ public class StreamDemo {
      **/
     public static void test16() {
         //        使用 reduce 求所有作者中年龄最大的值
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         System.out.println(authors.stream().map(author -> author.getAge()).reduce(0, new BinaryOperator<Integer>() {
             @Override
             public Integer apply(Integer result, Integer element) {
@@ -428,7 +390,7 @@ public class StreamDemo {
      **/
     public static void test17() {
         //        使用 reduce 求所有作者中年龄最大的值
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         System.out.println(authors.stream().map(author -> author.getAge())
                 .reduce(Integer.MAX_VALUE, new BinaryOperator<Integer>() {
                     @Override
@@ -447,7 +409,7 @@ public class StreamDemo {
      **/
     public static void test18() {
         //        使用 reduce 求所有作者中年龄最大的值
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         System.out.println(authors.stream().map(author -> author.getAge()).reduce(new BinaryOperator<Integer>() {
             @Override
             public Integer apply(Integer result, Integer element) {
@@ -464,7 +426,7 @@ public class StreamDemo {
      * @since 2023/9/10 16:54 by misteryliu
      **/
     public static void test19() {
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         // 创建流
         Stream<Author> stream = authors.stream();
         // 初次使用流
@@ -481,7 +443,7 @@ public class StreamDemo {
      * @since 2023/9/10 17:03 by misteryliu
      **/
     public static void test20() {
-        List<Author> authors = getAuthors();
+        List<Author> authors = InitData.getAuthors();
         // 创建流
         Stream<Author> stream = authors.stream();
 
